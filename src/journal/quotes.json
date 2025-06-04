@@ -1,0 +1,55 @@
+let quotes = [
+    {
+        "text": "Today is the day",
+        "author": "Martin Luther King, Jr."
+    },
+    {
+        "text": "We must live each day like our last",
+        "author": null
+    },
+    {
+        "text": "Be excellent to everybody.",
+        "author": "Bill and Ted"
+    },
+    {
+        "text": "Your past does not define your future. You have the power to create the life you deserve.",
+        "author": null
+    },
+    {
+        "text": "The journey of a thousand miles begins with a single step.",
+        "author": "Lao Tzu"
+    },
+    {
+        "text": "Believe you can and you're halfway there.",
+        "author": "Theodore Roosevelt"
+    },
+    {
+        "text": "You are not alone. We are all in this together, supporting each other on the path to healing.",
+        "author": null
+    },
+    {
+        "text": "Recovery is not a sprint, but a marathon. Keep moving forward, one step at a time.",
+        "author": null
+    },
+    {
+        "text": "Courage doesn't happen when you have all the answers. It happens when you are ready to face the questions you have been avoiding.",
+        "author": "Shannon L. Alder"
+    },
+    {
+        "text": "One day at a time.",
+        "author": null
+    },
+    {
+        "text": "It does not matter how slowly you go as long as you do not stop.",
+        "author": "Concucius"
+    },
+    {
+        "text": "Though no one can go back and make a brand new start, anyone can start from now and make a brand new ending.",
+        "author": "Carl Bard"
+    },
+    {
+        "text": "The best way out is always through.",
+        "author": "Robert frost"
+    }
+];
+

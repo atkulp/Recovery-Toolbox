@@ -1,0 +1,468 @@
+let values = [
+  {
+    "name": "Family",
+    "description": "to have a happy, loving family",
+    "id": 25
+  },
+  {
+    "name": "Adventure",
+    "description": "to have new and exciting experiences",
+    "id": 4
+  },
+  {
+    "name": "Humor",
+    "description": "to see the humorous side of myself and the world",
+    "id": 40
+  },
+  {
+    "name": "Sexuality",
+    "description": "to have an active and satisfying sex life",
+    "id": 74
+  },
+  {
+    "name": "Creativity",
+    "description": "to have new and original ideas",
+    "id": 18
+  },
+  {
+    "name": "Virtue",
+    "description": "to live a morally pure and excellent life",
+    "id": 81
+  },
+  {
+    "name": "Loving",
+    "description": "to give love to others",
+    "id": 49
+  },
+  {
+    "name": "God's Will",
+    "description": "to seek and obey the will of God",
+    "id": 33
+  },
+  {
+    "name": "Intimacy",
+    "description": "to share my innermost experiences with others",
+    "id": 44
+  },
+  {
+    "name": "Fitness",
+    "description": "to be physically fit and strong",
+    "id": 26
+  },
+  {
+    "name": "Compassion",
+    "description": "to feel and act on concern for others",
+    "id": 14
+  },
+  {
+    "name": "Risk",
+    "description": "to take risks and chances",
+    "id": 66
+  },
+  {
+    "name": "Excitement",
+    "description": "to have a life full of thrills and stimulation",
+    "id": 22
+  },
+  {
+    "name": "Dependability",
+    "description": "to be reliable and trustworthy",
+    "id": 19
+  },
+  {
+    "name": "Genuineness",
+    "description": "to act in a manner that is true to who I am",
+    "id": 32
+  },
+  {
+    "name": "Health",
+    "description": "to be physically well and healthy",
+    "id": 35
+  },
+  {
+    "name": "Hope",
+    "description": "to maintain a positive and optimistic outlook",
+    "id": 38
+  },
+  {
+    "name": "Purpose",
+    "description": "to have meaning and direction in my life",
+    "id": 62
+  },
+  {
+    "name": "Self-Esteem",
+    "description": "to feel good about myself",
+    "id": 71
+  },
+  {
+    "name": "Growth",
+    "description": "to keep changing and growing",
+    "id": 34
+  },
+  {
+    "name": "Acceptance",
+    "description": "to be accepted as I am",
+    "id": 1
+  },
+  {
+    "name": "Beauty",
+    "description": "to appreciate beauty around me",
+    "id": 8
+  },
+  {
+    "name": "Fun",
+    "description": "to play and have fun",
+    "id": 30
+  },
+  {
+    "name": "Knowledge",
+    "description": "to learn and contribute valuable knowledge",
+    "id": 46
+  },
+  {
+    "name": "Passion",
+    "description": "to have deep feelings about ideas, activities, or people",
+    "id": 58
+  },
+  {
+    "name": "Solitude",
+    "description": "to have time and space where I can be apart from others",
+    "id": 76
+  },
+  {
+    "name": "Openness",
+    "description": "to be open to new experiences, ideas, and options",
+    "id": 56
+  },
+  {
+    "name": "Self-control",
+    "description": "to be disciplined in my own actions",
+    "id": 70
+  },
+  {
+    "name": "Loved",
+    "description": "to be loved by those close to me",
+    "id": 48
+  },
+  {
+    "name": "Leisure",
+    "description": "to take time to relax and enjoy",
+    "id": 47
+  },
+  {
+    "name": "Self-knowledge",
+    "description": "to have a deep and honest understanding of myself",
+    "id": 72
+  },
+  {
+    "name": "Helpfulness",
+    "description": "to be helpful to others",
+    "id": 36
+  }
+,
+  {
+    "name": "Achievement",
+    "description": "to have important accomplishments",
+    "id": 3
+  }
+,
+  {
+    "name": "Pleasure",
+    "description": "to feel good",
+    "id": 59
+  }
+,
+  {
+    "name": "Comfort",
+    "description": "to have a pleasant and comfortable life",
+    "id": 12
+  }
+,
+  {
+    "name": "Mastery",
+    "description": "to be competent in my everyday activities",
+    "id": 50
+  }
+,
+  {
+    "name": "Cooperation",
+    "description": "to work collaboratively with others",
+    "id": 16
+  }
+,
+  {
+    "name": "Courtesy",
+    "description": "to be considerate and polite toward others",
+    "id": 17
+  }
+,
+  {
+    "name": "Challenge",
+    "description": "to take on difficult tasks and problems",
+    "id": 10
+  }
+,
+  {
+    "name": "Flexibility",
+    "description": "to adjust to new circumstances easily",
+    "id": 27
+  }
+,
+  {
+    "name": "Change",
+    "description": "to have a life full of change and variety",
+    "id": 11
+  }
+,
+  {
+    "name": "Inner peace",
+    "description": "to experience personal peace",
+    "id": 43
+  }
+,
+  {
+    "name": "Service",
+    "description": "to be of service to others",
+    "id": 73
+  }
+,
+  {
+    "name": "Simplicity",
+    "description": "to live life simply, with minimal needs",
+    "id": 75
+  }
+,
+  {
+    "name": "Honesty",
+    "description": "to be honest and truthful",
+    "id": 37
+  }
+,
+  {
+    "name": "Autonomy",
+    "description": "to be self-determined and independent",
+    "id": 7
+  }
+,
+  {
+    "name": "Independence",
+    "description": "to be free from dependence on others",
+    "id": 41
+  }
+,
+  {
+    "name": "Forgiveness",
+    "description": "to be forgiving of others",
+    "id": 28
+  }
+,
+  {
+    "name": "Order",
+    "description": "to have a life that is well-ordered and organized",
+    "id": 57
+  }
+,
+  {
+    "name": "Romance",
+    "description": "to have intense, exciting love in my life",
+    "id": 67
+  }
+,
+  {
+    "name": "Spirituality",
+    "description": "to grow and mature spiritually",
+    "id": 77
+  }
+,
+  {
+    "name": "Caring",
+    "description": "to take care of others",
+    "id": 9
+  }
+,
+  {
+    "name": "Non-conformity",
+    "description": "to question and challenge authority and norms",
+    "id": 54
+  }
+,
+  {
+    "name": "Humility",
+    "description": "to be modest and unassuming",
+    "id": 39
+  }
+,
+  {
+    "name": "Faithfulness",
+    "description": "to be loyal and true in relationships",
+    "id": 23
+  }
+,
+  {
+    "name": "Tolerance",
+    "description": "to accept and respect those who differ from me",
+    "id": 79
+  }
+,
+  {
+    "name": "Friendship",
+    "description": "to have close, supportive friends",
+    "id": 29
+  }
+,
+  {
+    "name": "Accuracy",
+    "description": "to be accurate in my opinions and beliefs",
+    "id": 2
+  }
+  ,
+  {
+    "name": "Safety",
+    "description": "to be safe and secure",
+    "id": 69
+  }
+  ,
+  {
+    "name": "Mindfulness",
+    "description": "to live conscious and mindful of the present moment",
+    "id": 51
+  }
+  ,
+  {
+    "name": "Generosity",
+    "description": "to give what I have to others",
+    "id": 31
+  }
+  ,
+  {
+    "name": "Ecology",
+    "description": "to live in harmony with the environment",
+    "id": 21
+  }
+  ,
+  {
+    "name": "World peace",
+    "description": "to work to promote peace in the world",
+    "id": 83
+  }
+  ,
+  {
+    "name": "Stability",
+    "description": "to have a life that stays fairly consistent",
+    "id": 78
+  }
+  ,
+  {
+    "name": "Authority",
+    "description": "to be in charge of and responsible for others",
+    "id": 6
+  }
+  ,
+  {
+    "name": "Realism",
+    "description": "to see and act realistically and practically",
+    "id": 64
+  }
+  ,
+  {
+    "name": "Rationality",
+    "description": "to be guided by reason and logic",
+    "id": 63
+  }
+  ,
+  {
+    "name": "Industry",
+    "description": "to work hard and well at my life tasks",
+    "id": 42
+  }
+  ,
+  {
+    "name": "Moderation",
+    "description": "to avoid excesses and find a middle ground",
+    "id": 52
+  }
+  ,
+  {
+    "name": "Fame",
+    "description": "to be known and recognized",
+    "id": 24
+  }
+  ,
+  {
+    "name": "Monogamy",
+    "description": "to have one close, loving relationship",
+    "id": 53
+  }
+  ,
+  {
+    "name": "Wealth",
+    "description": "to have plenty of money",
+    "id": 82
+  }
+  ,
+  {
+    "name": "Responsibility",
+    "description": "to make and carry out responsible decisions",
+    "id": 65
+  }
+  ,
+  {
+    "name": "Attractiveness",
+    "description": "to be physically attractive",
+    "id": 5
+  }
+  ,
+  {
+    "name": "Duty",
+    "description": "to carry out my duties and obligations",
+    "id": 20
+  }
+  ,
+  {
+    "name": "Commitment",
+    "description": "to make enduring, meaningful commitments",
+    "id": 13
+  }
+  ,
+  {
+    "name": "Power",
+    "description": "to have control over others",
+    "id": 61
+  }
+  ,
+  {
+    "name": "Contribution",
+    "description": "to make a lasting contribution in the world",
+    "id": 15
+  }
+  ,
+  {
+    "name": "Justice",
+    "description": "to promote fair and equal treatment for all",
+    "id": 45
+  }
+  ,
+  {
+    "name": "Nurturance",
+    "description": "to take care of and nurture others",
+    "id": 55
+  }
+  ,
+  {
+    "name": "Popularity",
+    "description": "to be well-liked by many people",
+    "id": 60
+  }
+  ,
+  {
+    "name": "Self-acceptance",
+    "description": "to accept myself as I am",
+    "id": 68
+  }
+  ,
+  {
+    "name": "Tradition",
+    "description": "to follow respected patterns of the past",
+    "id": 80
+  }
+]

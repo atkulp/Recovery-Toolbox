@@ -1,0 +1,34 @@
+let values = [
+        {
+            "name": "Wealth",
+            "description": ""
+        },
+        {
+            "name": "Beauty",
+            "description": ""
+        },
+        {
+            "name": "Kindness",
+            "description": ""
+        },
+        {
+            "name": "Compassion",
+            "description": ""
+        },
+        {
+            "name": "Sexuality",
+            "description": ""
+        },
+        {
+            "name": "Service",
+            "description": ""
+        },
+        {
+            "name": "Volunteering",
+            "description": ""
+        },
+        {
+            "name": "Happiness",
+            "description": ""
+        },
+    ];

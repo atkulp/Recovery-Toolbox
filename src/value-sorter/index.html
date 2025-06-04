@@ -1,0 +1,62 @@
+<html>
+
+<head>
+   <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+   <header>
+      <h1>Personal Values Card Sort</h1>
+      <p>Drag items above or below to indicate higher or lower priority values.</p>
+      <small>For more details, see our <a href="help.html" target="_blank">help</a> page.</small>
+   </header>
+
+   <article>
+      <p id="remaining">All cards remaining to sort</p>
+      <div class="toolbar">
+         <input type="button" value="Save and Exit" />
+         <input type="button" value="Next" id="nextButton" />
+      </div>
+      <div class="sorter">
+         <div class="upper">
+            <div class="zone-label">Very important to me</div>
+            <div class="sort-upper droppable" id="upper" droppable="true">
+            </div>
+         </div>
+         <hr />
+         <div class="middle">
+            <div class="zone-label">Important to me</div>
+            <div class="sort-middle droppable" id="middle" droppable="true">
+            </div>
+         </div>
+         <hr />
+         <div class="lower">
+            <div class="zone-label">Not important to me</div>
+            <div class="sort-lower droppable" id="lower" droppable="true">
+            </div>
+         </div>
+      </div>
+
+      <div class="summary">
+         <h2>Your very important value cards</h2>
+         <div class="summary-cards">
+         </div>
+      </div>
+   </article>
+
+   <footer>
+      <cite>Adapted from W.R. Miller, J.C'de Baca, D.B. Matthews, P.L. Wilbourne, University of New Mexico 2001,
+         <a href="https://motivationalinterviewing.org/personal-values-card-sort">details</a>
+      </cite>
+   </footer>
+
+   <script src="https://drag-drop-touch-js.github.io/dragdroptouch/dist/drag-drop-touch.esm.min.js?autoload"
+      type="module"></script>
+
+   <script src="values.json"></script>
+   <script src="dragger.js"></script>
+
+   <script src="script.js"></script>
+</body>
+
+</html>

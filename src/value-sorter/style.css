@@ -1,0 +1,143 @@
+article,
+header,
+footer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	max-width: 800px;
+
+	>div {
+		max-width: 100%;
+		margin-bottom: 1em;
+	}
+}
+
+article {
+	border: 1px solid #DDD;
+	border-radius: 1em;
+	background-color: #F9F9F9;
+	padding: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.droppable {
+	border: 2px solid #53687e1a;
+	padding: .25em;
+	border-radius: 1em;
+	;
+}
+
+.dropping {
+	border: .5em dashed #DDDDDD;
+}
+
+.hidden {
+	display: none;
+}
+
+.zone-label {
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.2em;
+	margin-bottom: .5em;
+}
+
+.printable,
+.sort-upper,
+.sort-middle,
+.sort-lower,
+.summary-cards {
+	min-height: 2em;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.toolbar {
+	min-height: 2em;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+@media screen and (max-width: 600px) {
+
+	article,
+	header,
+	footer {
+		width: 100%;
+	}
+}
+
+.value-card {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	vertical-align: top;
+	padding: 1em;
+	border: 5px solid #53687E;
+	/* margin-bottom: .5em;
+	margin-right: .5em; */
+	width: 8cm;
+	aspect-ratio: 10 / 4.5;
+	text-align: center;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+
+	div:nth-child(1) {
+		font-weight: bold;
+		text-transform: uppercase;
+		font-size: 1.1rem;
+		margin-bottom: .5em;
+	}
+
+	div:nth-child(2) {
+		font-style: italic;
+		font-size: .75em;
+	}
+
+	div:nth-child(3) {
+		font-style: italic;
+		font-size: .5em;
+		left: 1em;
+		bottom: 1em;
+		position: absolute;
+	}
+}
+
+@media print {
+
+	article,
+	header,
+	footer {
+		margin: 0;
+		font-size: 1.2em;
+		max-width: none;
+		width: 100%;
+	}
+
+	.printable .value-card {
+		border: 1px solid #000;
+		page-break-inside: avoid;
+		font-size: 1.5rem;
+	}
+
+	.printable.printable-md .value-card {
+		width: 6cm;
+		font-size: 1.25rem;
+	}
+
+	.no-print {
+		display: none;
+	}
+}
