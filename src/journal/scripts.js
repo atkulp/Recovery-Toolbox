@@ -1,55 +1,86 @@
-// Load a random quote
-let quoteIdx = Math.ceil( Math.random() * quotes.length) - 1;
-let qotd = document.querySelector('.qotd').innerHTML = `&#8220;${quotes[quoteIdx].text}&#8221; &ndash;&nbsp;${quotes[quoteIdx].author ?? 'Anonymous'}`;
+const { createApp, ref, watch, reactive } = Vue
 
-// Load a random affirmation
-let affirmationIdx = Math.ceil(Math.random() * affirmations.length) - 1;
-let affirmation = document.querySelector('.affirmation').innerHTML = affirmations[affirmationIdx];
+createApp({
+    data() {
+        return {
+            sobrietyCounter: 0,
+            qotd: {
+                text: null,
+                author: null
+            },
+            affirmation: "Loading...",
+            "date": null,
+            "time": null,
+            entry: {
+                'date': null,
+                'sobriety': null,
+                'selfcare': null,
+                'risks': null,
+                'gratitude': null
+            },
+            journal: []
+        };
+    },
+    mounted() {
+        this.initData();
+    },
+    methods: {
+        initData() {
+            // Load a random quote
+            fetch('quotes.json')
+                .then(response => response.json())
+                .then(quotes => {
+                    let quoteIdx = Math.ceil(Math.random() * quotes.length) - 1;
+                    let qotd = document.querySelector('.qotd');
+                    this.qotd = quotes[quoteIdx];
+                });
 
-// Load or create the journal for today
-let now = new Date();
-let today = now.toJSON().split('T')[0];
-let journal = JSON.parse(window.localStorage.getItem('journal')) ?? [];
-let entry = journal.find(e => e.date == today)
+            // Load a random affirmation
+            fetch('affirmations.json')
+                .then(response => response.json())
+                .then(affirmations => {
+                    let affirmationIdx = Math.ceil(Math.random() * affirmations.length) - 1;
+                    this.affirmation = affirmations[affirmationIdx];
+                });
 
-let fields = document.querySelectorAll('.journal-form input');
-let fieldMap = {};
-Array.from(fields).forEach(f => fieldMap[f.name] =  f);
+            // Set the date/time display (current time zone)
+            let now = new Date();
+            let locale = Intl.DateTimeFormat().resolvedOptions().locale;
+            let datetimeParts = Intl.DateTimeFormat(locale, { dateStyle: 'full', timeStyle: 'short' }).format(now).split(' at ');
+            this.date = datetimeParts[0];
+            this.time = datetimeParts[1];
 
-if( entry == null ) {
-    entry = {
-        'date': today,
-        'sobriety': null,
-        'selfcare': null,
-        'risks': null,
-        'gratitude': []
-    };
-    journal.push(entry);
-} else {
-    fieldMap['sobriety'].value = entry.sobriety ?? '';
-    fieldMap['selfcare'].value = entry.selfcare ?? '';
-    fieldMap['risks'].value = entry.risks ?? '';
-    fieldMap['gratitude'].value = entry.gratitude ?? '';
-}
+            // Sobriety
+            let sobrietyDateVal = window.localStorage.getItem("sobrietyDate");
+            let sobrietyDate = sobrietyDateVal ? new Date(sobrietyDateVal) : new Date();
+            let elapsed = (now.getTime() - sobrietyDate.getTime()) / 1000 / 60 / 60 / 24;
+            this.sobrietyCounter = `${Math.round(elapsed)} days of sobriety`;
 
-// Set event handler for journal blur
-for( let field of fields ) {
-    field.onblur = (f) => {
-        entry[f.target.name] = f.target.value;
-        window.localStorage.setItem('journal', JSON.stringify(journal));
-    };
-}
+            this.loadJournal();
+        },
+        loadJournal() {
+            // Load or create the journal for today
+            let now = new Date();
+            let today = now.toJSON().split('T')[0];
 
-// Set the date/time display (current time zone)
-let datetime = document.querySelector('.datetime');
+            this.journal = JSON.parse(window.localStorage.getItem('journal')) ?? [];
+            let todayEntry = this.journal.find(e => e.date == today);
 
-let locale = Intl.DateTimeFormat().resolvedOptions().locale;
-let datetimeParts = Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale, { dateStyle: 'full', timeStyle: 'short' }).format(now).split(' at ');
-datetime.innerHTML = `${datetimeParts[0]}<br />${datetimeParts[1]}`;
-
-// Sobriety
-let sobriety = document.querySelector('.sobriety');
-let sobrietyDateVal = window.localStorage.getItem("sobrietyDate");
-let sobrietyDate = sobrietyDateVal ? new Date(sobrietyDateVal) : new Date();
-let elapsed = (now.getTime() - sobrietyDate.getTime()) / 1000 / 60 / 60 / 24;
-sobriety.innerHTML = `${Math.round(elapsed)} days of sobriety`;
+            if (todayEntry == null) {
+                this.entry.date = today;
+                this.journal.push(this.entry);
+            } else {
+                this.entry = reactive(todayEntry)
+            }
+        }
+    },
+    watch: {
+        entry: {
+            handler(newVal) {
+                // Respond to changes here, e.g., save to localStorage
+                window.localStorage.setItem('journal', JSON.stringify(this.journal));
+            },
+            deep: true
+        }
+    },
+}).mount("#app");

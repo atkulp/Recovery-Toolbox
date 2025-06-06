@@ -1,4 +1,4 @@
-let quotes = [
+[
     {
         "text": "Today is the day",
         "author": "Martin Luther King, Jr."
@@ -51,5 +51,4 @@ let quotes = [
         "text": "The best way out is always through.",
         "author": "Robert frost"
     }
-];
-
+]

@@ -23,7 +23,7 @@ article {
 
 .droppable {
 	border: 2px solid #53687e1a;
-	padding: .25em;
+	padding: .5em;
 	border-radius: 1em;
 	;
 }
@@ -64,6 +64,21 @@ article {
 	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: flex-end;
+
+	input {
+		margin-left: .5em;
+		margin-right: .5em;
+		padding: .5em 1em;
+		border-radius: 1em;
+		border: 1px solid #53687E;
+		background-color: #F9F9F9;
+		cursor: pointer;
+		font-size: 1rem;
+	}
+
+	input:hover {
+		background-color: #E0E0E0;
+	}
 }
 
 @media screen and (max-width: 600px) {
@@ -71,7 +86,10 @@ article {
 	article,
 	header,
 	footer {
-		width: 100%;
+		width: auto;
+		margin-left: 2em;
+		margin-right: 2em;
+		max-width: none;
 	}
 }
 
@@ -115,26 +133,29 @@ article {
 	}
 }
 
+.sorter .value-card {
+	cursor: grab;
+}
+
 @media print {
 
+	body {
+	}
 	article,
 	header,
 	footer {
 		margin: 0;
 		font-size: 1.2em;
+		overflow: hidden;
+		width: auto;
 		max-width: none;
-		width: 100%;
 	}
 
-	.printable .value-card {
+	.value-card {
 		border: 1px solid #000;
 		page-break-inside: avoid;
+		width: 7cm;
 		font-size: 1.5rem;
-	}
-
-	.printable.printable-md .value-card {
-		width: 6cm;
-		font-size: 1.25rem;
 	}
 
 	.no-print {

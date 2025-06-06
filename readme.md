@@ -32,7 +32,6 @@ So much to do! I envision the journal being used as a new tab page and maybe cre
 
 ### General
 - Major code cleanup!
-- Proper json files with fetch loading (current solution is to support file:// testing)
 
 ### Journal (src/journal)
 
@@ -50,6 +49,6 @@ So much to do! I envision the journal being used as a new tab page and maybe cre
 - Better presentation (much in progress)
 - Once all sorted, encourage user to narrow down to ten
 - Once ten in More Important, maybe allow for granular ordering
-- Printable view for final ten
 - Maybe use these highest rated values in journal (cycle under days of sobriety?)
 - Store sort choices in app storage to recall later
+- Cleaner drag and drop handling, list binding

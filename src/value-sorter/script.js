@@ -1,80 +1,108 @@
-const valueRatings = {
-    upper: [],
-    middle: [],
-    lower: [],
-    unsorted: []
-};
+const { createApp, ref, watch, reactive } = Vue
 
-// Display values
-let sortUpper = document.querySelector('.sort-upper');
-let sortMiddle = document.querySelector('.sort-middle');
-let sortLower = document.querySelector('.sort-lower');
+createApp({
+    data() {
+        return {
+            values: [],
+            showSorter: true,
+            showSummary: false
+        }
+    },
+    mounted() {
+        fetch('values.json')
+            .then(response => response.json())
+            .then((values) => {
+                this.values = values;
+                this.initData();
+            });
+        
+        initDropZones();
+    },
+    computed: {
+        highPriValues() {
+            return this.values.filter(v => v.priority == "upper");
+        },
+        midPriValues() {
+            return this.values.filter(v => v.priority == "middle");
+        },
+        lowPriValues() {
+            return this.values.filter(v => v.priority == "lower");
+        },
+        unsortedValues() {
+            return this.values.filter(v => !v.priority);
+        }
+    },
+    methods: {
+        initData() {
+            this.showSorter = false;
+            this.showSummary = false;
 
-let nextButton = document.getElementById('nextButton');
-nextButton.addEventListener("click", () => {
-    sortUpper.replaceChildren();
-    sortMiddle.replaceChildren();
-    sortLower.replaceChildren();
+            // Randomize the values array
+            this.values.sort(() => Math.random() - 0.5);
 
-    if (!displayCards(6, sortMiddle))
-    {
-        displayCards(0, document.querySelector(".summary-cards"), valueRatings.upper);
+            for (let v of this.values) {
+                v.priority = null;
+            }
+
+            document.querySelector('.sort-upper').replaceChildren();
+            document.querySelector('.sort-middle').replaceChildren();
+            document.querySelector('.sort-lower').replaceChildren();
+            this.displayCards(6, document.querySelector(".sort-middle"));
+
+            this.showSorter = true;
+
+        },
+        resetClicked() {
+            this.initData();
+        },
+        printClicked() {
+            window.print();
+        },
+        nextClicked() {
+            // Clear the current sort zones
+            document.querySelector('.sort-upper').replaceChildren();
+            document.querySelector('.sort-middle').replaceChildren();
+            document.querySelector('.sort-lower').replaceChildren();
+
+            this.displayCards(6, document.querySelector(".sort-middle"));
+        },
+        displayCards(visible = 6, destEl) {
+            let currentCards;
+
+            if (!visible || visible < 1) {
+                // Get all cards for printing
+                currentCards = this.values;
+            } else {
+                // Only get the first unsorted 'visible' cards for display
+                currentCards = this.unsortedValues.slice(0, visible);
+            }
+
+            // Out of cards? Switch to summary view
+            if (currentCards.length == 0) {
+                this.showSorter = false;
+                this.showSummary = true;
+                return false;
+            }
+
+            let i = 0;
+            for (let v of currentCards) {
+                let card = document.createElement("div");
+                card.order = v.id;
+                card.id = `card-${i++}`;
+                card.className = "value-card draggable";
+                card.innerHTML = `<div>${v.name}</div><div>${v.description}</div>`;
+                card.valueCard = v;
+                v.priority = "middle";
+
+                destEl.appendChild(card);
+            }
+
+            // Initialize drag and drop
+            initDrag(destEl.children, (el) => {
+                // No-op
+            });
+
+            return true;
+        }
     }
-
-});
-
-window.addEventListener("DOMContentLoaded", () => {
-    displayCards(6, sortMiddle);
-});
-
-function countCards() {
-    valueRatings.upper = values.filter(v => v.priority == "upper");
-    valueRatings.middle = values.filter(v => v.priority == "middle");
-    valueRatings.lower = values.filter(v => v.priority == "lower");
-    valueRatings.unsorted = values.filter(v => !v.priority);
-
-    document.getElementById("remaining").innerHTML = `${valueRatings.unsorted.length} cards remaining to sort`;
-
-    document.querySelector(".upper .zone-label").innerHTML = `Very important to me (${valueRatings.upper.length})`;
-    document.querySelector(".middle .zone-label").innerHTML = `Important to me (${valueRatings.middle.length})`;
-    document.querySelector(".lower .zone-label").innerHTML = `Not important to me (${valueRatings.lower.length})`;
-}
-
-function displayCards(visible = 6, destEl, cards) {
-    let currentCards = cards ?? values;
-
-    if (!visible || visible < 1) {
-        // Get all cards for printing
-    } else {
-        // Only get the first unsorted 'visible' cards for display
-        let unsorted = currentCards.filter(v => !v.priority);
-        let len = unsorted.length, rnd = Math.ceil(Math.random() * (len - visible));
-        currentCards = unsorted.slice(rnd, rnd + visible)
-    }
-
-    if (currentCards.length == 0) {
-        document.querySelector(".sorter").classList.add("hidden");
-        return false;
-    }
-
-    let i = 0;
-    for (let v of currentCards) {
-        let card = document.createElement("div");
-        card.order = v.id;
-        card.id = `card-${i++}`;
-        card.className = "value-card draggable";
-        card.innerHTML = `<div>${v.name}</div><div>${v.description}</div>`;
-        card.valueCard = v;
-        v.priority = "middle";
-
-        destEl.appendChild(card);
-    }
-
-    initDrag(sortMiddle.children, (el) => {
-        countCards();
-    });
-
-    countCards();
-
-    return true;
-}
+}).mount('#app');

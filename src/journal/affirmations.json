@@ -1,4 +1,4 @@
-let affirmations = [
+[
     "I am enough.",
     "I am worthy of love and respect.",
     "I am capable of achieving my goals.",
@@ -8,4 +8,4 @@ let affirmations = [
     "I am grateful for the present",
     "I am constantly growing and improving.",
     "I am surrounded by positive energy."
-];
+]
