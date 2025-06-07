@@ -1,11 +1,13 @@
-const { createApp, ref, watch, reactive } = Vue
+const { createApp, ref, watch, reactive} = Vue
+
 
 createApp({
     data() {
         return {
             values: [],
             showSorter: true,
-            showSummary: false
+            showSummary: false,
+            page: []
         }
     },
     mounted() {
@@ -16,6 +18,13 @@ createApp({
                 this.initData();
             });
         
+        setDropCallback((dragId, dropId) => {
+            let item = this.values.find(item => item.id == dragId);
+            if (item) {
+                item.priority = dropId;
+            }
+        });
+
         initDropZones();
     },
     computed: {
@@ -27,6 +36,15 @@ createApp({
         },
         lowPriValues() {
             return this.values.filter(v => v.priority == "lower");
+        },
+        pageUpper() {
+            return this.page.filter(v => v.priority == "upper");
+        },
+        pageMiddle() {
+            return this.page.filter(v => v.priority == "middle");
+        },
+        pageLower() {
+            return this.page.filter(v => v.priority == "lower");
         },
         unsortedValues() {
             return this.values.filter(v => !v.priority);
@@ -44,10 +62,7 @@ createApp({
                 v.priority = null;
             }
 
-            document.querySelector('.sort-upper').replaceChildren();
-            document.querySelector('.sort-middle').replaceChildren();
-            document.querySelector('.sort-lower').replaceChildren();
-            this.displayCards(6, document.querySelector(".sort-middle"));
+            this.displayCards(6);
 
             this.showSorter = true;
 
@@ -59,48 +74,24 @@ createApp({
             window.print();
         },
         nextClicked() {
-            // Clear the current sort zones
-            document.querySelector('.sort-upper').replaceChildren();
-            document.querySelector('.sort-middle').replaceChildren();
-            document.querySelector('.sort-lower').replaceChildren();
-
             this.displayCards(6, document.querySelector(".sort-middle"));
         },
-        displayCards(visible = 6, destEl) {
-            let currentCards;
-
-            if (!visible || visible < 1) {
-                // Get all cards for printing
-                currentCards = this.values;
-            } else {
-                // Only get the first unsorted 'visible' cards for display
-                currentCards = this.unsortedValues.slice(0, visible);
-            }
+        dragstart({ target, dataTransfer }) {
+            dataTransfer.setData("text/plain", target.id);
+            dataTransfer.effectAllowed = "move";
+            //window.getComputedStyle(target).order;
+        },
+        displayCards(visible = 6) {
+            // Only get the first unsorted 'visible' cards for display
+            this.page = [...this.unsortedValues.slice(0, visible)];
+            this.page.forEach(v => { v.priority = "middle"; });
 
             // Out of cards? Switch to summary view
-            if (currentCards.length == 0) {
+            if (this.page.length == 0) {
                 this.showSorter = false;
                 this.showSummary = true;
                 return false;
             }
-
-            let i = 0;
-            for (let v of currentCards) {
-                let card = document.createElement("div");
-                card.order = v.id;
-                card.id = `card-${i++}`;
-                card.className = "value-card draggable";
-                card.innerHTML = `<div>${v.name}</div><div>${v.description}</div>`;
-                card.valueCard = v;
-                v.priority = "middle";
-
-                destEl.appendChild(card);
-            }
-
-            // Initialize drag and drop
-            initDrag(destEl.children, (el) => {
-                // No-op
-            });
 
             return true;
         }

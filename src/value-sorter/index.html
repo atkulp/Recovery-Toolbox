@@ -1,6 +1,16 @@
 <html>
 
 <head>
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZHN5KEHNB7"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZHN5KEHNB7');
+   </script>
+   
    <link rel="stylesheet" href="style.css" />
    <title>Personal Values Online Card Sort</title>
 </head>
@@ -18,7 +28,7 @@
       <div class="no-print">
          <p>{{ unsortedValues.length }}/{{ values.length }} cards remaining to sort</p>
          <div class="toolbar">
-            <input type="button" value="Reset Priorities" v-on:click="resetClicked($event)" />
+            <input type="button" value="Reset All" v-on:click="resetClicked($event)" />
             <input type="button" value="Print" :class="{'hidden': !showSummary}" v-on:click="printClicked($event)" />
             <input type="button" value="Next" :class="{'hidden': !showSorter}" v-on:click="nextClicked($event)" />
          </div>
@@ -28,18 +38,36 @@
          <div class="upper">
             <div class="zone-label">Very important to me ({{ highPriValues.length }})</div>
             <div class="sort-upper droppable" id="upper">
+               <div class="value-card" v-for="(item, index) in pageUpper"
+                  :key="item.id" :id="item.id" draggable="true" :style="{order: index}"
+                  v-on:dragstart="dragstart">
+                  <div>{{item.name}}</div>
+                  <div>{{item.description}}</div>
+               </div>
             </div>
          </div>
          <hr />
          <div class="middle">
             <div class="zone-label">Important to me ({{ midPriValues.length }})</div>
             <div class="sort-middle droppable" id="middle">
+               <div class="value-card" v-for="(item, index) in pageMiddle"
+                  :key="item.id" :id="item.id" draggable="true" :style="{order: index}"
+                  v-on:dragstart="dragstart">
+                  <div>{{item.name}}</div>
+                  <div>{{item.description}}</div>
+               </div>
             </div>
          </div>
          <hr />
          <div class="lower">
             <div class="zone-label">Not important to me ({{ lowPriValues.length }})</div>
             <div class="sort-lower droppable" id="lower">
+               <div class="value-card" v-for="(item, index) in pageLower"
+                  :key="item.id" :id="item.id" draggable="true" :style="{order: index}"
+                  v-on:dragstart="dragstart">
+                  <div>{{item.name}}</div>
+                  <div>{{item.description}}</div>
+               </div>
             </div>
          </div>
       </div>
