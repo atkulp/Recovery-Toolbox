@@ -38,12 +38,17 @@
 
         <div class="journal">
             <form class="journal-form">
-                <h2>Recovery Journal</h2>
+                <h2>Recovery Journal ({{ dateFormat(journalDate, 'short') }})</h2>
                 <label><span>Recovery</span><input type="text" name="sobriety" v-model.lazy="entry.sobriety" /></label>
                 <label><span>Self-care</span><input type="text" name="selfcare" v-model.lazy="entry.selfcare" /></label>
                 <label><span>Risks</span><input type="text" name="risks" v-model.lazy="entry.risks" /></label>
                 <label><span>Gratitude</span><input type="text" name="gratitude"
                         v-model.lazy="entry.gratitude" /></label>
+            </form>
+            <div class="journal-toolbar">
+                <input type="button" v-on:click="prevEntry($event)" value="<"></input>
+                <input type="button" v-on:click="nextEntry($event)" value=">"></input>
+            </div>
         </div>
 
         <div class="videos">
