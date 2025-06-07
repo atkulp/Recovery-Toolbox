@@ -1,23 +1,26 @@
+let values;
+
+fetch('values.json')
+    .then(response => response.json())
+    .then((data) => {
+        values = data;
+        displayCards(0, document.querySelector('.main .printable'));
+});
+
 function displayCards(visible = 6, destEl) {
-    let currentCards = values
-    if (!visible || visible < 1) {
-        // Get all cards for printing
-        currentCards = [
-            { name: "Personal Values<br/> Card Sort", description: "Miller, de Baca, Matthews, Wilbourne<br/>U of New Mexico, 2001", id: 0 },
-            { name: "Important to me", description: "", id: 0 },
-            { name: "Very important to me", description: "", id: 0 },
-            { name: "Not important to me", description: "", id: 0 },
-            ...values.toSorted((a, b) => a.name.localeCompare(b.name)), // Sort by name
-            { name: "Other Value:", description: "", id: 0 },
-            { name: "Other Value:", description: "", id: 0 },
-            { name: "Other Value:", description: "", id: 0 },
-        ];
-    } else {
-        // Only get the first unsorted 'visible' cards for display
-        let unsorted = values.filter(v => !v.priority);
-        let len = unsorted.length, rnd = Math.ceil(Math.random() * (len - visible));
-        currentCards = unsorted.slice(rnd, rnd + visible)
-    }
+    // Get all cards for printing
+    console.debug("Displaying cards for printing", values);
+
+    let currentCards = [
+        { name: "Personal Values<br/> Card Sort", description: "Miller, de Baca, Matthews, Wilbourne<br/>U of New Mexico, 2001", id: 0 },
+        { name: "Important to me", description: "", id: 0 },
+        { name: "Very important to me", description: "", id: 0 },
+        { name: "Not important to me", description: "", id: 0 },
+        ...values.toSorted((a, b) => a.name.localeCompare(b.name)), // Sort by name
+        { name: "Other Value:", description: "", id: 0 },
+        { name: "Other Value:", description: "", id: 0 },
+        { name: "Other Value:", description: "", id: 0 },
+    ];
     
     let i = 0;
     for (let v of currentCards) {
