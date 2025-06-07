@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZHN5KEHNB7"></script>
@@ -9,27 +10,28 @@
 
         gtag('config', 'G-ZHN5KEHNB7');
     </script>
-    
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="journal-form.css"/>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="journal-form.css" />
     <title>Recovery Journal</title>
 </head>
+
 <body>
-    <div id="app" class="main">
+    <div id="app" class="main" v-cloak>
 
         <div class="datetime">
             {{ date }}<br />
             {{ time }}
         </div>
-    
+
         <div class="sobriety" alt="Click to manage or update">
             {{ sobrietyCounter}}
         </div>
-    
+
         <div class="qotd">
             &#8220;{{ qotd.text }}&#8221; &ndash;&nbsp; {{ qotd.author || 'Unknown' }}
         </div>
-    
+
         <div class="affirmation">
             {{ affirmation }}
         </div>
@@ -37,10 +39,11 @@
         <div class="journal">
             <form class="journal-form">
                 <h2>Recovery Journal</h2>
-                <label><span>Recovery</span><input type="text" name="sobriety" v-model.lazy="entry.sobriety"/></label>
-                <label><span>Self-care</span><input type="text" name="selfcare" v-model.lazy="entry.selfcare"/></label>
-                <label><span>Risks</span><input type="text" name="risks" v-model.lazy="entry.risks"/></label>
-                <label><span>Gratitude</span><input type="text" name="gratitude" v-model.lazy="entry.gratitude"/></label>
+                <label><span>Recovery</span><input type="text" name="sobriety" v-model.lazy="entry.sobriety" /></label>
+                <label><span>Self-care</span><input type="text" name="selfcare" v-model.lazy="entry.selfcare" /></label>
+                <label><span>Risks</span><input type="text" name="risks" v-model.lazy="entry.risks" /></label>
+                <label><span>Gratitude</span><input type="text" name="gratitude"
+                        v-model.lazy="entry.gratitude" /></label>
         </div>
 
         <div class="videos">
@@ -51,4 +54,5 @@
     <script type="module" src="scripts.js"></script>
 
 </body>
+
 </html>
