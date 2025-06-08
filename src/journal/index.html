@@ -24,8 +24,9 @@
             {{ time }}
         </div>
 
-        <div class="sobriety" alt="Click to manage or update">
-            {{ sobrietyCounter}}
+        <div class="sobriety" title="Click to manage or update" v-on:click="showSobrietyDialog()">
+            <span v-if="sobrietyDate">{{ sobrietyCounter }} days of sobriety <small>(since {{ dateFormat(sobrietyDate, 'short') }})</small></span>
+            <span v-if="!sobrietyDate">Click to set your sobriety date</span>
         </div>
 
         <div class="qotd">
@@ -53,6 +54,21 @@
 
         <div class="videos">
         </div>
+
+        <!-- Modal Backdrop -->
+        <div v-if="showDialog" class="modal-backdrop" v-on:click="showDialog = false"></div>
+        <dialog open v-if="showDialog">
+            <p>Set your sobriety date</p>
+            <form method="dialog">
+                <p>
+                    <input type="date" v-model="form.sobrietyDate" />
+                </p>
+                <p>
+                    <button v-on:click="updateSobriety()">OK</button>
+                    <button v-on:click="showDialog = false">Cancel</button>
+                </p>
+            </form>
+        </dialog>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

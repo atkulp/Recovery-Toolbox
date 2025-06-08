@@ -4,7 +4,6 @@ let locale = Intl.DateTimeFormat().resolvedOptions().locale;
 createApp({
     data() {
         return {
-            sobrietyCounter: 0,
             qotd: {
                 text: null,
                 author: null
@@ -13,6 +12,7 @@ createApp({
             date: null,
             time: null,
             journalDate: ref(new Date()),
+            sobrietyDate: null,
             entry: {
                 'date': null,
                 'sobriety': null,
@@ -20,7 +20,11 @@ createApp({
                 'risks': null,
                 'gratitude': null
             },
-            journal: []
+            form: {
+                sobrietyDate: null
+            },
+            journal: [],
+            showDialog: false,
         };
     },
     mounted() {
@@ -30,6 +34,15 @@ createApp({
         // Get the unsorted values (for display)
         unsortedValues() {
             return this.journal.filter(e => e.date != this.today);
+        },
+        sobrietyCounter() {
+            // Calculate the number of days sober
+            if (this.sobrietyDate) {
+                let now = new Date();
+                let diffTime = Math.abs(now - this.sobrietyDate);
+                return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            }
+            return 0;
         }
     },
     methods: {
@@ -67,11 +80,22 @@ createApp({
 
             // Sobriety
             let sobrietyDateVal = window.localStorage.getItem("sobrietyDate");
-            let sobrietyDate = sobrietyDateVal ? new Date(sobrietyDateVal) : new Date();
-            let elapsed = (now.getTime() - sobrietyDate.getTime()) / 1000 / 60 / 60 / 24;
-            this.sobrietyCounter = `${Math.round(elapsed)} days of sobriety`;
+            this.sobrietyDate = sobrietyDateVal ? new Date(sobrietyDateVal) : null;
 
             this.loadJournal();
+        },
+        showSobrietyDialog() {
+            // Show the dialog to update sobriety date
+            this.showDialog = true;
+            this.form.sobrietyDate = this.sobrietyDate.toJSON().split('T')[0]; // Format date for input
+        },
+        updateSobriety() {
+            if (this.form.sobrietyDate != null) {
+                // Update the sobriety date and save it to localStorage
+                window.localStorage.setItem("sobrietyDate", this.form.sobrietyDate);
+                this.sobrietyDate = new Date(this.form.sobrietyDate);
+            }
+            this.showDialog = false;
         },
         nextEntry(event) {
             let nowDateStr = new Date().toJSON().split('T')[0];
