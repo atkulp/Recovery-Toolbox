@@ -18,12 +18,12 @@ which is a BSD-like license. See the 'LICENSE' file for details.
 Currently all static web pages using HTML application local storage with no backend.
 
 ## How to build
-Not needed
+For self-hosting or testing, simply install and run `serve` or a similar lightweight web server. There is no server-side component, but the `fetch` operations will fail with file:// (File | Open) hosting.
 
 ## How to use
-For the sobriety journal, open [src/journal/index.html](src/journal/index.html). Enter notes on how you worked your recovery, ways you engaged in self-care, risks to your sobriety, and things you're grateful for. Entries automatically save for the given day and will display until the next day.
+For the sobriety journal, go to [atkulp.github.io/Recovery-Toolbox/journal](https://atkulp.github.io/Recovery-Toolbox/journal). Enter notes on how you worked your recovery, ways you engaged in self-care, risks to your sobriety, and things you're grateful for. Entries automatically save for the given day and will display until the next day.
 
-For the value card sorter tool, open [src/value-sorter/index.html](src/value-sorter/index.html). Drag and drop values to Very or Less Important to me, then click Next. After sorting all cards, the More Important cards will be displayed. As this is still in-progress, there is nothing else to see for now.
+For the value card sorter tool, go to [atkulp.github.io/Recovery-Toolbox/value-sorter](https://atkulp.github.io/Recovery-Toolbox/value-sorter). Drag and drop values to Very or Less Important to me, then click Next. After sorting all cards, the More Important cards will be displayed. As this is still in-progress, there is nothing else to see for now.
 
 There are also pages related to the Value Card Sorter. For instructions and more information about the original tool, see the [src/value-sorter/help.html](src/value-sorter/help.html) page. For a printable version of the cards with 10/page and 12/page options (assuming 8.5x11 paper), see the [src/value-sorter/printable.html](src/value-sorter/printable.html) page.
 

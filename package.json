@@ -1,0 +1,27 @@
+{
+  "name": "toolbox",
+  "version": "1.0.0",
+  "description": "Tools for addition recovery",
+  "scripts": {
+    "serve-journal": "serve src/journal -p 3000",
+    "serve-sorter": "serve src/value-sorter -p 4000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atkulp/Recovery-Toolbox.git"
+  },
+  "keywords": [
+    "addiction",
+    "recovery",
+    "mental health"
+  ],
+  "author": "Arian T. Kulp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/atkulp/Recovery-Toolbox/issues"
+  },
+  "homepage": "https://github.com/atkulp/Recovery-Toolbox#readme",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
