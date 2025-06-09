@@ -65,15 +65,3 @@ input:checked~.toggle span {
     left: -9999px;
     opacity: 0;
 }
-
-body {
-    transition: background-color .25s;
-    color: black;
-    background-color: white;
-}
-
-body:has(#darkmode-toggle:checked) {
-    color: white;
-    background-color: black;
-    transition: background-color .25s; 
-}

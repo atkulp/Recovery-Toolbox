@@ -14,93 +14,97 @@
    <link rel="stylesheet" href="style.css" />
    <link rel="stylesheet" href="darkmode.css" />
    <title>Personal Values Online Card Sort</title>
+
 </head>
 
-<body id="app" v-cloak>
-   <header>
-      <h1>Personal Values Online Card Sort
+<body>
+   <div id="app" v-cloak>
+      <header>
+         <h1>Personal Values Online Card Sort
+            <div class="no-print">
+               <input type="checkbox" class="sr-only" id="darkmode-toggle" v-model="prefersDark">
+               <label for="darkmode-toggle" class="toggle">
+                  <span>Toggle dark mode</span>
+               </label>
+            </div>
+         </h1>
          <div class="no-print">
-            <input type="checkbox" class="sr-only" id="darkmode-toggle" v-model="prefersDark">
-            <label for="darkmode-toggle" class="toggle">
-               <span>Toggle dark mode</span>
-            </label>
+            <p>Drag items above or below to indicate higher or lower priority values.</p>
+            <small>For more details, see our <a href="help.html" target="_blank">help</a> page.</small>
          </div>
-      </h1>
-      <div class="no-print">
-         <p>Drag items above or below to indicate higher or lower priority values.</p>
-         <small>For more details, see our <a href="help.html" target="_blank">help</a> page.</small>
-      </div>
-   </header>
+      </header>
 
-   <article class="main">
-      <div class="no-print">
-         <p>{{ unsortedValues.length }}/{{ values.length }} cards remaining to sort</p>
-         <div class="toolbar">
-            <input type="button" value="Reset All" v-on:click="resetClicked($event)" />
-            <input type="button" value="Print" :class="{'hidden': !showSummary}" v-on:click="printClicked($event)" />
-            <input type="button" value="Next" :class="{'hidden': !showSorter}" v-on:click="nextClicked($event)" />
+      <article class="main">
+         <div class="no-print">
+            <p>{{ unsortedValues.length }}/{{ values.length }} cards remaining to sort</p>
+            <div class="toolbar">
+               <input type="button" value="Reset All" v-on:click="resetClicked($event)" />
+               <input type="button" value="Print" :class="{'hidden': !showSummary}" v-on:click="printClicked($event)" />
+               <input type="button" value="Next" :class="{'hidden': !showSorter}" v-on:click="nextClicked($event)" />
+            </div>
          </div>
-      </div>
 
-      <div class="sorter" :class="{'hidden': !showSorter}">
-         <div class="upper">
-            <div class="zone-label">Very important to me ({{ highPriValues.length }})</div>
-            <div class="sort-upper droppable" id="upper">
-               <div class="value-card" v-for="(item, index) in pageUpper" :key="item.id" :id="item.id" draggable="true"
-                  :style="{order: index}" v-on:dragstart="dragstart">
+         <div class="sorter" :class="{'hidden': !showSorter}">
+            <div class="upper">
+               <div class="zone-label">Very important to me ({{ highPriValues.length }})</div>
+               <div class="sort-upper droppable" id="upper">
+                  <div class="value-card" v-for="(item, index) in pageUpper" :key="item.id" :id="item.id"
+                     draggable="true" :style="{order: index}" v-on:dragstart="dragstart">
+                     <div>{{item.name}}</div>
+                     <div>{{item.description}}</div>
+                  </div>
+               </div>
+            </div>
+            <hr />
+            <div class="middle">
+               <div class="zone-label">Important to me ({{ midPriValues.length }})</div>
+               <div class="sort-middle droppable" id="middle">
+                  <div class="value-card" v-for="(item, index) in pageMiddle" :key="item.id" :id="item.id"
+                     draggable="true" :style="{order: index}" v-on:dragstart="dragstart">
+                     <div>{{item.name}}</div>
+                     <div>{{item.description}}</div>
+                  </div>
+               </div>
+            </div>
+            <hr />
+            <div class="lower">
+               <div class="zone-label">Not important to me ({{ lowPriValues.length }})</div>
+               <div class="sort-lower droppable" id="lower">
+                  <div class="value-card" v-for="(item, index) in pageLower" :key="item.id" :id="item.id"
+                     draggable="true" :style="{order: index}" v-on:dragstart="dragstart">
+                     <div>{{item.name}}</div>
+                     <div>{{item.description}}</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="summary" :class="{'hidden': !showSummary}">
+            <div class="zone-label">Your very important value cards ({{ highPriValues.length }})</div>
+            <div class="summary-cards">
+               <div class="printable value-card" v-for="item in highPriValues" :key="item.name">
                   <div>{{item.name}}</div>
                   <div>{{item.description}}</div>
                </div>
             </div>
          </div>
-         <hr />
-         <div class="middle">
-            <div class="zone-label">Important to me ({{ midPriValues.length }})</div>
-            <div class="sort-middle droppable" id="middle">
-               <div class="value-card" v-for="(item, index) in pageMiddle" :key="item.id" :id="item.id" draggable="true"
-                  :style="{order: index}" v-on:dragstart="dragstart">
-                  <div>{{item.name}}</div>
-                  <div>{{item.description}}</div>
-               </div>
-            </div>
-         </div>
-         <hr />
-         <div class="lower">
-            <div class="zone-label">Not important to me ({{ lowPriValues.length }})</div>
-            <div class="sort-lower droppable" id="lower">
-               <div class="value-card" v-for="(item, index) in pageLower" :key="item.id" :id="item.id" draggable="true"
-                  :style="{order: index}" v-on:dragstart="dragstart">
-                  <div>{{item.name}}</div>
-                  <div>{{item.description}}</div>
-               </div>
-            </div>
-         </div>
-      </div>
+      </article>
 
-      <div class="summary" :class="{'hidden': !showSummary}">
-         <div class="zone-label">Your very important value cards ({{ highPriValues.length }})</div>
-         <div class="summary-cards">
-            <div class="printable value-card" v-for="item in highPriValues" :key="item.name">
-               <div>{{item.name}}</div>
-               <div>{{item.description}}</div>
-            </div>
-         </div>
-      </div>
-   </article>
-
-   <footer>
-      <cite>Adapted from W.R. Miller, J.C'de Baca, D.B. Matthews, P.L. Wilbourne, University of New Mexico 2001,
-         <a href="https://motivationalinterviewing.org/personal-values-card-sort">details</a>
-      </cite>
-   </footer>
-
-   <script src="https://drag-drop-touch-js.github.io/dragdroptouch/dist/drag-drop-touch.esm.min.js?autoload"
-      type="module"></script>
-
-   <script src="dragger.js"></script>
-
-   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-   <script src="script.js"></script>
+      <footer>
+         <cite>Adapted from W.R. Miller, J.C'de Baca, D.B. Matthews, P.L. Wilbourne, University of New Mexico 2001,
+            <a href="https://motivationalinterviewing.org/personal-values-card-sort">details</a>
+         </cite>
+      </footer>
+   </div>
 </body>
+
+<script type="application/javascript"
+   src="https://drag-drop-touch-js.github.io/dragdroptouch/dist/drag-drop-touch.esm.min.js?autoload"
+   type="module"></script>
+
+<script type="application/javascript" src="dragger.js"></script>
+
+<script type="application/javascript" src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="application/javascript" src="script.js"></script>
 
 </html>

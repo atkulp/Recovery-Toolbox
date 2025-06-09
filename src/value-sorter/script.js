@@ -21,7 +21,6 @@ createApp({
         } else {
             this.prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         }
-        console.info(`Dark mode preference: scheme=${window.matchMedia("(prefers-color-scheme: dark)").matches}, storage=${lsPrefersDark}, prefersDark=${this.prefersDark}`);
 
         // Read value cards from JSON file
         fetch('values.json')
@@ -67,7 +66,6 @@ createApp({
     },
     watch: {
         prefersDark(newValue) {
-            console.info(`Dark mode preference changed to: ${newValue}`);
             window.localStorage.setItem("prefers-dark", newValue);
         }
     },
