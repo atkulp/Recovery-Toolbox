@@ -23,7 +23,6 @@ function initDropZones() {
     if (!dragAreaInit) {
         
         [upper, middle, lower].forEach(dropZone => {
-            console.info("Adding drop zone", dropZone.id);
             dropZone.addEventListener("dragover", dragoverHandler);
             dropZone.addEventListener("dragenter", dragenterHandler);
             dropZone.addEventListener("dragleave", dragleaveHandler);
@@ -54,6 +53,8 @@ function dropHandler(ev) {
     ev.preventDefault();
 
     if (ev.toElement == upper || ev.toElement == lower || ev.toElement == middle) {
+        ev.toElement.classList.remove(`dropping`);
+
         // Get the id of the target and move the element
         const draggedId = ev.dataTransfer.getData("text/plain");  
         if (draggedId) {

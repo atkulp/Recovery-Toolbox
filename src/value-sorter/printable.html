@@ -11,13 +11,21 @@
       gtag('config', 'G-ZHN5KEHNB7');
    </script>
 
-   <link rel="stylesheet" href="style.css" />
-   <title>Personal Values Card Sort</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="darkmode.css" />
+<title>Personal Values Card Sort</title>
 </head>
 
 <body>
    <header class="no-print">
-      <h1>Personal Values Card Sort (printable)</h1>
+      <h1>Personal Values Card Sort (printable)
+         <div class="no-print">
+            <input type="checkbox" class="sr-only" id="darkmode-toggle" onchange="toggleDarkMode(event)">
+            <label for="darkmode-toggle" class="toggle">
+               <span>Toggle dark mode</span>
+            </label>
+         </div>
+      </h1>
       <p>
          This is a printable version of the Personal Values Card Sort exercise.
          Cards will layout automatically for your printer.
@@ -31,10 +39,10 @@
       </p>
    </header>
 
-   <div class="main">
+   <article class="main">
       <div class="printable printable-md">
       </div>
-   </div>
+   </article>
 
    <footer>
       <cite>Adapted from W.R. Miller, J.C'de Baca, D.B. Matthews, P.L. Wilbourne, University of New Mexico 2001,
@@ -42,19 +50,32 @@
       </cite>
    </footer>
 
-   <script src="values.json"></script>
-
    <script src="printable.js"></script>
 
    <script>
-      displayCards(visible = 0, document.querySelector(".printable"));
-      //window.print();
       function printCards(size = "lg") {
          const printable = document.querySelector(".printable");
          printable.className = `printable printable-${size}`;
          window.print();
          printable.className = "printable";
       }
+
+    function toggleDarkMode(evt) {
+        console.info(`Dark mode preference changed to: ${evt.target.checked}`);
+        window.localStorage.setItem("prefers-dark", evt.target.checked);
+    }
+
+    // Initialize dark mode based on user preference
+    let lsPrefersDark = window.localStorage.getItem("prefers-dark");
+    document.getElementById("darkmode-toggle").checked = "true";
+    if (lsPrefersDark !== null) {
+        document.getElementById("darkmode-toggle").checked = lsPrefersDark == "true";
+    } else {
+        document.getElementById("darkmode-toggle").checked = "true"; window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+
+    displayCards(visible = 0, document.querySelector(".printable"));
+
    </script>
 </body>
 

@@ -15,7 +15,6 @@ footer {
 article {
 	border: 1px solid #DDD;
 	border-radius: 1em;
-	background-color: #F9F9F9;
 	padding: 1em;
 	margin-top: 1em;
 	margin-bottom: 1em;
@@ -107,10 +106,10 @@ article {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background-color: white;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	position: relative;
+	overflow: hidden;
 
 	div:nth-child(1) {
 		font-weight: bold;
@@ -121,7 +120,7 @@ article {
 
 	div:nth-child(2) {
 		font-style: italic;
-		font-size: .75em;
+		font-size: .7em;
 	}
 
 	div:nth-child(3) {
@@ -139,16 +138,25 @@ article {
 
 @media print {
 
+	/* Force light mode on print */
+
 	article,
 	header,
 	footer {
+		color: black;
 		margin: 0;
 		font-size: 1.2em;
 		overflow: hidden;
 		width: auto;
 		max-width: none;
+		border: none;
+		padding: 0;
 	}
 
+	.droppable {
+		border: none;
+		padding: 0;
+	}
 	.printable .value-card {
 		border: 1px solid #000;
 		page-break-inside: avoid;

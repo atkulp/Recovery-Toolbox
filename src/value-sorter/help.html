@@ -12,12 +12,20 @@
     </script>
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="darkmode.css" />
     <title>Personal Values Card Sort Exercise</title>
 </head>
 
 <body>
     <header>
-        <h1>Personal Values Card Sort Exercise</h1>
+        <h1>Personal Values Card Sort Exercise
+            <div class="no-print">
+                <input type="checkbox" class="sr-only" id="darkmode-toggle" onchange="toggleDarkMode(event)">
+                <label for="darkmode-toggle" class="toggle">
+                    <span>Toggle dark mode</span>
+                </label>
+            </div>
+        </h1>
     </header>
 
     <article>
@@ -62,5 +70,21 @@
         </cite>
     </footer>
 </body>
+
+<script>
+    function toggleDarkMode(evt) {
+        console.info(`Dark mode preference changed to: ${evt.target.checked}`);
+        window.localStorage.setItem("prefers-dark", evt.target.checked);
+    }
+
+    // Initialize dark mode based on user preference
+    let lsPrefersDark = window.localStorage.getItem("prefers-dark");
+    document.getElementById("darkmode-toggle").checked = "true";
+    if (lsPrefersDark !== null) {
+        document.getElementById("darkmode-toggle").checked = lsPrefersDark == "true";
+    } else {
+        document.getElementById("darkmode-toggle").checked = "true"; window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+</script>
 
 </html>

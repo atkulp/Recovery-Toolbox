@@ -7,10 +7,23 @@ createApp({
             values: [],
             showSorter: true,
             showSummary: false,
-            page: []
+            page: [],
+            prefersDark: null
         }
     },
     mounted() {
+
+        // Check localStorage for dark mode preference
+        // If not set, default to system preference
+        let lsPrefersDark = window.localStorage.getItem("prefers-dark");
+        if (lsPrefersDark !== null) {
+            this.prefersDark = lsPrefersDark == "true";
+        } else {
+            this.prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+        console.info(`Dark mode preference: scheme=${window.matchMedia("(prefers-color-scheme: dark)").matches}, storage=${lsPrefersDark}, prefersDark=${this.prefersDark}`);
+
+        // Read value cards from JSON file
         fetch('values.json')
             .then(response => response.json())
             .then((values) => {
@@ -18,7 +31,9 @@ createApp({
                 this.initData();
             });
         
+        // Initialize drag and drop functionality
         setDropCallback((dragId, dropId) => {
+            // Update the priority of the dragged item based on the drop target
             let item = this.values.find(item => item.id == dragId);
             if (item) {
                 item.priority = dropId;
@@ -48,6 +63,12 @@ createApp({
         },
         unsortedValues() {
             return this.values.filter(v => !v.priority);
+        }
+    },
+    watch: {
+        prefersDark(newValue) {
+            console.info(`Dark mode preference changed to: ${newValue}`);
+            window.localStorage.setItem("prefers-dark", newValue);
         }
     },
     methods: {
