@@ -2,9 +2,23 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-image: url("bg.jpg");
-        backdrop-filter: blur(2px) brightness(90%);
+        backdrop-filter: blur(2px);
 
-        color: white;
+        --background-color: #F0F0F0;
+        --text-color: #0D1B2A;
+        --accent-color: #53687E;
+
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text-color);
+        background-color: var(--background-color);
+
+        transition: background-color .25s;
+    }
+
+    body:has(#darkmode-toggle:checked) {
+        --background-color: #0D1B2A;
+        --text-color: #F0F0F0;
+        --accent-color: #00FFFF;
     }
 
     .main {
@@ -52,11 +66,10 @@
     .journal {
         display: block;
         font-size: 16px;
-        background: #22222288;
+        background-color: color-mix(in srgb, var(--background-color), transparent 50%);
         padding: 1em;
-        border: 5px solid #53687E;
+        border: 5px solid var(--accent-color);
         border-radius: 1em;
-        font-family: Georgia, "Times New Roman", Times, serif;
     }
 
     div.journal-toolbar {
@@ -66,11 +79,18 @@
         margin-bottom: .25em;
     }
 
+    /* Image background backdrop */
+    .image-backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: color-mix(in srgb, var(--background-color), transparent 80%);
+    }
+
     /* Modal backdrop */
     .modal-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background-color: color-mix(in srgb, var(--background-color), transparent 30%);
         z-index: 1000;
     }
 
@@ -83,6 +103,25 @@
         margin: 0;
         z-index: 1001;
         border-radius: 8px;
-        box-shadow: 0 2px 24px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 24px color-mix(in srgb, var(--text-color), transparent 20%);
         padding: 2em 2em 1em 2em;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid var(--accent-color);
+        margin: 1em 0;
+    }
+
+    @media print {
+        .no-print {
+            display: none;
+        }
+
+        body,
+        body:has(#darkmode-toggle:checked) {
+            --background-color: white;
+            --text-color: black;
+            --accent-color: black;
+        }
     }

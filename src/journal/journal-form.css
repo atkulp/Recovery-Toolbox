@@ -1,9 +1,7 @@
-
-
 .journal-form h2 {
     margin-block-end: .5em;
     margin-block-start: .25em;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid var(--accent-color);
 }
 
 .journal-form input[type=submit],
@@ -13,7 +11,7 @@
 .journal-form textarea {
     display: inline-block;
     width: 70%;
-    color: white;
+    color: var(--text-color);
     background: transparent;
     border: none;
     outline: none;
@@ -25,45 +23,46 @@
     margin-bottom: .5em;
     width: 100%;
 }
-.journal-form label > span {
+
+.journal-form label>span {
     display: inline-block;
     width: calc(30% - 1em);
     margin-right: 1em;
 }
 
 .journal-form input[type=text],
-.journal-form input[type=email] 
-{
+.journal-form input[type=email] {
     display: inline-block;
-    border-bottom: 1px dashed #83A4C5;
+    border-bottom: 1px dashed var(--text-color);
     width: 70%;
-}
-.journal-form textarea{
-    display: inline-block;
-    border-bottom: 1px dashed #83A4C5;
-    width: 70%;
-    overflow: hidden;
-    resize:none;
-    height:2em;
 }
 
-.journal-form textarea:focus, 
+.journal-form textarea {
+    display: inline-block;
+    border-bottom: 1px dashed var(--text-color);
+    width: 70%;
+    overflow: hidden;
+    resize: none;
+    height: 2em;
+}
+
+.journal-form textarea:focus,
 .journal-form input[type=text]:focus,
 .journal-form input[type=email]:focus,
-.journal-form input[type=email] :focus
-{
-    border-bottom: 1px dashed #0C0B0B;
+.journal-form input[type=email] :focus {
+    border-bottom: 1px dashed var(--text-color);
 }
 
 .journal-form input[type=submit],
-.journal-form input[type=button]{
-    background: #576E86;
+.journal-form input[type=button] {
+    background: var(--background-color);
     border: none;
     padding: 8px 10px 8px 10px;
     border-radius: 5px;
-    color: #A8BACE;
+    color: var(--text-color);
 }
+
 .journal-form input[type=submit]:hover,
-.journal-form input[type=button]:hover{
-background: #394D61;
+.journal-form input[type=button]:hover {
+    background: var(--text-color);
 }

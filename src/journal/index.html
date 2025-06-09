@@ -13,62 +13,75 @@
 
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="journal-form.css" />
+    <link rel="stylesheet" href="darkmode.css" />
     <title>Recovery Journal</title>
 </head>
 
 <body>
-    <div id="app" class="main" v-cloak>
+    <div class="image-backdrop">
+        <div id="app" class="main" v-cloak>
 
-        <div class="datetime">
-            {{ date }}<br />
-            {{ time }}
-        </div>
-
-        <div class="sobriety" title="Click to manage or update" v-on:click="showSobrietyDialog()">
-            <span v-if="sobrietyDate">{{ sobrietyCounter }} days of sobriety <small>(since {{ dateFormat(sobrietyDate, 'short') }})</small></span>
-            <span v-if="!sobrietyDate">Click to set your sobriety date</span>
-        </div>
-
-        <div class="qotd">
-            &#8220;{{ qotd.text }}&#8221; &ndash;&nbsp; {{ qotd.author || 'Unknown' }}
-        </div>
-
-        <div class="affirmation">
-            {{ affirmation }}
-        </div>
-
-        <div class="journal">
-            <form class="journal-form">
-                <h2>Recovery Journal ({{ dateFormat(journalDate, 'short') }})</h2>
-                <label><span>Recovery</span><input type="text" name="sobriety" v-model.lazy="entry.sobriety" /></label>
-                <label><span>Self-care</span><input type="text" name="selfcare" v-model.lazy="entry.selfcare" /></label>
-                <label><span>Risks</span><input type="text" name="risks" v-model.lazy="entry.risks" /></label>
-                <label><span>Gratitude</span><input type="text" name="gratitude"
-                        v-model.lazy="entry.gratitude" /></label>
-            </form>
-            <div class="journal-toolbar">
-                <input type="button" v-on:click="prevEntry($event)" value="<"></input>
-                <input type="button" v-on:click="nextEntry($event)" value=">"></input>
+            <div class="no-print">
+                <input type="checkbox" class="sr-only" id="darkmode-toggle" v-model.immediate="prefersDark">
+                <label for="darkmode-toggle" class="toggle">
+                    <span>Toggle dark mode</span>
+                </label>
             </div>
-        </div>
 
-        <div class="videos">
-        </div>
+            <div class="datetime">
+                {{ date }}<br />
+                {{ time }}
+            </div>
 
-        <!-- Modal Backdrop -->
-        <div v-if="showDialog" class="modal-backdrop" v-on:click="showDialog = false"></div>
-        <dialog open v-if="showDialog">
-            <p>Set your sobriety date</p>
-            <form method="dialog">
-                <p>
-                    <input type="date" v-model="form.sobrietyDate" />
-                </p>
-                <p>
-                    <button v-on:click="updateSobriety()">OK</button>
-                    <button v-on:click="showDialog = false">Cancel</button>
-                </p>
-            </form>
-        </dialog>
+            <div class="sobriety" title="Click to manage or update" v-on:click="showSobrietyDialog()">
+                <span v-if="sobrietyDate">{{ sobrietyCounter }} days of sobriety <small>(since {{
+                        dateFormat(sobrietyDate, 'short') }})</small></span>
+                <span v-if="!sobrietyDate">Click to set your sobriety date</span>
+            </div>
+
+            <div class="qotd">
+                &#8220;{{ qotd.text }}&#8221; &ndash;&nbsp; {{ qotd.author || 'Unknown' }}
+            </div>
+
+            <div class="affirmation">
+                {{ affirmation }}
+            </div>
+
+            <div class="journal">
+                <form class="journal-form">
+                    <h2>Recovery Journal ({{ dateFormat(journalDate, 'short') }})</h2>
+                    <label><span>Recovery</span><input type="text" name="sobriety"
+                            v-model.lazy="entry.sobriety" /></label>
+                    <label><span>Self-care</span><input type="text" name="selfcare"
+                            v-model.lazy="entry.selfcare" /></label>
+                    <label><span>Risks</span><input type="text" name="risks" v-model.lazy="entry.risks" /></label>
+                    <label><span>Gratitude</span><input type="text" name="gratitude"
+                            v-model.lazy="entry.gratitude" /></label>
+                </form>
+                <div class="journal-toolbar">
+                    <input type="button" v-on:click="prevEntry($event)" value="<"></input>
+                    <input type="button" v-on:click="nextEntry($event)" value=">"></input>
+                </div>
+            </div>
+
+            <div class="videos">
+            </div>
+
+            <!-- Modal Backdrop -->
+            <div v-if="showDialog" class="modal-backdrop" v-on:click="showDialog = false"></div>
+            <dialog open v-if="showDialog">
+                <p>Set your sobriety date</p>
+                <form method="dialog">
+                    <p>
+                        <input type="date" v-model="form.sobrietyDate" />
+                    </p>
+                    <p>
+                        <button v-on:click="updateSobriety()">OK</button>
+                        <button v-on:click="showDialog = false">Cancel</button>
+                    </p>
+                </form>
+            </dialog>
+        </div>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

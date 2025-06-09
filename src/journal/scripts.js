@@ -11,7 +11,7 @@ createApp({
             affirmation: "Loading...",
             date: null,
             time: null,
-            journalDate: ref(new Date()),
+            journalDate: new Date(),
             sobrietyDate: null,
             entry: {
                 'date': null,
@@ -25,10 +25,20 @@ createApp({
             },
             journal: [],
             showDialog: false,
+            prefersDark: null
         };
     },
     mounted() {
         this.initData();
+
+        // Check localStorage for dark mode preference
+        // If not set, default to system preference
+        let lsPrefersDark = window.localStorage.getItem("prefers-dark");
+        if (lsPrefersDark !== null) {
+            this.prefersDark = lsPrefersDark == "true";
+        } else {
+            this.prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
     },
     computed: {
         // Get the unsorted values (for display)
@@ -154,6 +164,9 @@ createApp({
                 window.localStorage.setItem('journal', JSON.stringify(this.journal));
             },
             deep: true
+        },
+        prefersDark(newValue) {
+            window.localStorage.setItem("prefers-dark", newValue);
         }
     },
 }).mount("#app");
