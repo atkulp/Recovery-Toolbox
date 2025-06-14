@@ -22,10 +22,17 @@
         <div id="app" class="main" v-cloak>
 
             <div class="no-print">
-                <input type="checkbox" class="sr-only" id="darkmode-toggle" v-model.immediate="prefersDark">
+                <input type="checkbox" class="sr-only" id="darkmode-toggle" v-model.immediate="settings.prefersDark">
                 <label for="darkmode-toggle" class="toggle">
                     <span>Toggle dark mode</span>
                 </label>
+
+                <div class="settings-toggle-wrapper" title="Open/close settings">
+                    <input type="checkbox" class="sr-only" id="settings-toggle" v-model.immediate="showSettings">
+                    <label for="settings-toggle" class="settings-toggle" title="Open/close settings">
+                        <img alt="Settings gear" draggable="false">
+                    </label>
+                </div>
             </div>
 
             <div class="datetime">
@@ -33,17 +40,19 @@
                 {{ time }}
             </div>
 
-            <div class="sobriety" title="Click to manage or update" v-on:click="showSobrietyDialog()">
-                <span v-if="sobrietyDate">{{ sobrietyCounter }} days of sobriety <small>(since {{
-                        dateFormat(sobrietyDate, 'short') }})</small></span>
-                <span v-if="!sobrietyDate">Click to set your sobriety date</span>
+            <div class="sobriety" title="Click to manage or update" v-on:click="showSettingsDialog()">
+                <span v-if="settings.name"><span>Hi {{ settings.name }}!</span><br /></span>
+                <span v-if="settings.sobrietyDate && sobrietyCounter == 0">Today is a great day to start your sobriety!
+                    <small></span>
+                <span v-if="settings.sobrietyDate && sobrietyCounter == 1">Congrats on a day of sobriety!</span>
+                <span v-if="settings.sobrietyDate && sobrietyCounter > 1">Congrats on {{ sobrietyCounter }} days of
+                    sobriety!
+                    <small>(since {{
+                        dateFormat(settings.sobrietyDate, 'short') }})</small></span>
+                <span v-if="!settings.sobrietyDate">Click to set your sobriety date</span>
             </div>
 
-            <div class="qotd">
-                &#8220;{{ qotd.text }}&#8221; &ndash;&nbsp; {{ qotd.author || 'Unknown' }}
-            </div>
-
-            <div class="affirmation">
+            <div class="affirmation" v-if="settings.showAffirmations">
                 {{ affirmation }}
             </div>
 
@@ -64,16 +73,73 @@
                 </div>
             </div>
 
+            <div class="qotd" v-if="settings.showQuotes">
+                &#8220;{{ qotd.text }}&#8221; &ndash;&nbsp; {{ qotd.author || 'Unknown' }}
+            </div>
+
             <div class="videos">
             </div>
 
+            <!-- Settings sidebar -->
+            <aside :class="{'shown': showSettings}">
+                <div class="settings-title">
+                    <h2>General</h2>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-option">
+                        <label for="settings.name">
+                            Your name
+                            <span class="help" title="Optional. Used to display a greeting">?</span>
+                        </label>
+                        <input type="text" id="settings.name" v-model.lazy="settings.name" />
+                    </div>
+                    <hr />
+                    <div class="settings-option">
+                        <label for="settings.showQuotes">
+                            Show daily quotes
+                            <span class="help" title="Toggle to show or hide daily quotes.">?</span>
+                        </label>
+                        <div class="rounded-checkbox">
+                            <input type="checkbox" id="settings.showQuotes" v-model="settings.showQuotes" />
+                            <label></label>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="settings-option">
+                        <label for="settings.showAffirmations">
+                            Show affirmations
+                            <span class="help" title="Toggle to show or hide positive affirmations.">?</span>
+                        </label>
+                        <div class="rounded-checkbox">
+                            <input type="checkbox" id="settings.showAffirmations" v-model="settings.showAffirmations" />
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-title">
+                    <h2>Sobriety</h2>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-option">
+                        <label for="settings.sobrietyDate">
+                            Sobriety Date
+                            <span class="help" title="Your first day of recovery.">?</span>
+                        </label>
+                        <input type="date" id="settings.sobrietyDate" :value="toISODate(settings.sobrietyDate)"
+                            @input="settings.sobrietyDate = toDate($event.target.value)" />
+                    </div>
+                </div>
+            </aside>
+
             <!-- Modal Backdrop -->
-            <div v-if="showDialog" class="modal-backdrop" v-on:click="showDialog = false"></div>
+            <div v-if="showDialog || showSettings" class="modal-backdrop"
+                v-on:click="showDialog = showSettings = false"></div>
             <dialog open v-if="showDialog">
                 <p>Set your sobriety date</p>
                 <form method="dialog">
                     <p>
-                        <input type="date" v-model="form.sobrietyDate" />
+                        <input type="date" v-model.lazy="settings.sobrietyDate" />
                     </p>
                     <p>
                         <button v-on:click="updateSobriety()">OK</button>

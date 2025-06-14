@@ -1,68 +1,70 @@
-.journal-form h2 {
-    margin-block-end: .5em;
-    margin-block-start: .25em;
-    border-bottom: 2px solid var(--accent-color);
-}
+.journal > form.journal-form {
+    h2 {
+        margin-block-end: .5em;
+        margin-block-start: .25em;
+        border-bottom: 2px solid var(--accent-color);
+    }
 
-.journal-form input[type=submit],
-.journal-form input[type=button],
-.journal-form input[type=text],
-.journal-form input[type=email],
-.journal-form textarea {
-    display: inline-block;
-    width: 70%;
-    color: var(--text-color);
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 0;
-}
+    input[type=submit],
+    input[type=button],
+    input[type=text],
+    input[type=email],
+    textarea {
+        display: inline-block;
+        width: 70%;
+        color: var(--text-color);
+        background: transparent;
+        border: none;
+        outline: none;
+        padding: 0;
+    }
 
-.journal-form label {
-    display: block;
-    margin-bottom: .5em;
-    width: 100%;
-}
+    label {
+        display: block;
+        margin-bottom: .5em;
+        width: 100%;
+    }
 
-.journal-form label>span {
-    display: inline-block;
-    width: calc(30% - 1em);
-    margin-right: 1em;
-}
+    label>span {
+        display: inline-block;
+        width: calc(30% - 1em);
+        margin-right: 1em;
+    }
 
-.journal-form input[type=text],
-.journal-form input[type=email] {
-    display: inline-block;
-    border-bottom: 1px dashed var(--text-color);
-    width: 70%;
-}
+    input[type=text],
+    input[type=email] {
+        display: inline-block;
+        border-bottom: 1px dashed var(--text-color);
+        width: 70%;
+    }
 
-.journal-form textarea {
-    display: inline-block;
-    border-bottom: 1px dashed var(--text-color);
-    width: 70%;
-    overflow: hidden;
-    resize: none;
-    height: 2em;
-}
+    textarea {
+        display: inline-block;
+        border-bottom: 1px dashed var(--text-color);
+        width: 70%;
+        overflow: hidden;
+        resize: none;
+        height: 2em;
+    }
 
-.journal-form textarea:focus,
-.journal-form input[type=text]:focus,
-.journal-form input[type=email]:focus,
-.journal-form input[type=email] :focus {
-    border-bottom: 1px dashed var(--text-color);
-}
+    textarea:focus,
+    input[type=text]:focus,
+    input[type=email]:focus,
+    input[type=email] :focus {
+        border-bottom: 1px dashed var(--text-color);
+    }
 
-.journal-form input[type=submit],
-.journal-form input[type=button] {
-    background: var(--background-color);
-    border: none;
-    padding: 8px 10px 8px 10px;
-    border-radius: 5px;
-    color: var(--text-color);
-}
+    input[type=submit],
+    input[type=button] {
+        background: var(--background-color);
+        border: none;
+        padding: 8px 10px 8px 10px;
+        border-radius: 5px;
+        color: var(--text-color);
+    }
 
-.journal-form input[type=submit]:hover,
-.journal-form input[type=button]:hover {
-    background: var(--text-color);
+    input[type=submit]:hover,
+    input[type=button]:hover {
+        background: var(--text-color);
+    }
 }

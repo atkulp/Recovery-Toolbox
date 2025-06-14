@@ -12,7 +12,6 @@ createApp({
             date: null,
             time: null,
             journalDate: new Date(),
-            sobrietyDate: null,
             entry: {
                 'date': null,
                 'sobriety': null,
@@ -20,12 +19,16 @@ createApp({
                 'risks': null,
                 'gratitude': null
             },
-            form: {
-                sobrietyDate: null
+            settings: {
+                sobrietyDate: null,
+                showQuotes: true,
+                showAffirmations: true,
+                name: null,
+                prefersDark: null,
             },
             journal: [],
             showDialog: false,
-            prefersDark: null
+            showSettings: false
         };
     },
     mounted() {
@@ -33,12 +36,18 @@ createApp({
 
         // Check localStorage for dark mode preference
         // If not set, default to system preference
-        let lsPrefersDark = window.localStorage.getItem("prefers-dark");
+        let _settings = JSON.parse(window.localStorage.getItem("settings") ?? "{}");
+
+        if (_settings?.sobrietyDate) _settings.sobrietyDate = new Date(_settings.sobrietyDate);
+
+        let lsPrefersDark = _settings.prefersDark;
         if (lsPrefersDark !== null) {
-            this.prefersDark = lsPrefersDark == "true";
+            _settings.prefersDark = lsPrefersDark == "true" || lsPrefersDark === true;
         } else {
-            this.prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            _settings.prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         }
+
+        this.settings = _settings;
     },
     computed: {
         // Get the unsorted values (for display)
@@ -47,13 +56,15 @@ createApp({
         },
         sobrietyCounter() {
             // Calculate the number of days sober
-            if (this.sobrietyDate) {
+            if (this.settings.sobrietyDate) {
                 let now = new Date();
-                let diffTime = Math.abs(now - this.sobrietyDate);
+                // Reset time to midnight for accurate day count
+                now.setUTCHours(0, 0, 0, 0);
+                let diffTime = Math.abs(now - this.settings.sobrietyDate);
                 return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             }
             return 0;
-        }
+        },
     },
     methods: {
         initData() {
@@ -94,26 +105,18 @@ createApp({
 
             this.loadJournal();
         },
-        showSobrietyDialog() {
+        showSettingsDialog() {
             // Show the dialog to update sobriety date
-            this.showDialog = true;
-            this.form.sobrietyDate = this.sobrietyDate.toJSON().split('T')[0]; // Format date for input
-        },
-        updateSobriety() {
-            if (this.form.sobrietyDate != null) {
-                // Update the sobriety date and save it to localStorage
-                window.localStorage.setItem("sobrietyDate", this.form.sobrietyDate);
-                this.sobrietyDate = new Date(this.form.sobrietyDate);
-            }
-            this.showDialog = false;
+            this.showSettings = true;
         },
         nextEntry(event) {
-            let nowDateStr = new Date().toJSON().split('T')[0];
-            let journalDateStr = this.journalDate.toJSON().split('T')[0];
+            let nowDateStr = toISODate(new Date());
+            let journalDateStr = toISODate(this.journalDate);
 
             if (journalDateStr < nowDateStr) {
+                // Move to the next day in the journal
                 this.journalDate.setDate(this.journalDate.getDate() + 1);
-                journalDateStr = this.journalDate.toJSON().split('T')[0];
+                journalDateStr = toISODate(this.journalDate);
 
                 // Find the previous entry in the journal
                 let prevJournal = this.journal.find(e => e.date == journalDateStr);
@@ -127,7 +130,7 @@ createApp({
         },
         prevEntry(event) {
             this.journalDate.setDate(this.journalDate.getDate() - 1);
-            let isoDate = this.journalDate.toJSON().split('T')[0];
+            let isoDate = this.toISODate(this.journalDate);
 
             // Find the previous entry in the journal
             let prevJournal = this.journal.find(e => e.date == isoDate);
@@ -139,12 +142,17 @@ createApp({
             }
         },
         dateFormat(value, format = 'short') {
-            return Intl.DateTimeFormat(locale, { dateStyle: format }).format(value);
+            return value ? Intl.DateTimeFormat(locale, { dateStyle: format }).format(value) : '';
+        },
+        toISODate(value) {
+            return value && typeof value !== 'string' ? value.toISOString().split('T')[0] : null;
+        },
+        toDate(value) {
+            return value ? new Date(value) : null;
         },
         loadJournal() {
             // Load or create the journal for today
-            let now = new Date();
-            let today = now.toJSON().split('T')[0];
+            let today = this.toISODate(new Date().toJSON());
 
             this.journal = JSON.parse(window.localStorage.getItem('journal')) ?? [];
             let todayEntry = this.journal.find(e => e.date == today);
@@ -165,8 +173,22 @@ createApp({
             },
             deep: true
         },
-        prefersDark(newValue) {
-            window.localStorage.setItem("prefers-dark", newValue);
-        }
+        settings: {
+            handler(newVal) {
+                if (typeof newVal.sobrietyDate === 'string') {
+                    // Convert string date to Date object
+                    this.settings.sobrietyDate = new Date(newVal.sobrietyDate);
+                }
+
+                // Respond to changes here, e.g., save to localStorage
+                const settingsToSave = { ...this.settings };
+                // Convert Date object to ISO string for storage
+                if (settingsToSave.sobrietyDate && settingsToSave.sobrietyDate instanceof Date) {
+                    settingsToSave.sobrietyDate = this.toISODate(settingsToSave.sobrietyDate);
+                }
+                window.localStorage.setItem('settings', JSON.stringify(settingsToSave));
+            },
+            deep: true
+        },
     },
 }).mount("#app");

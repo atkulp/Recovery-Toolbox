@@ -2,17 +2,22 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-image: url("bg.jpg");
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(5px) brightness(0.8);
 
         --background-color: #F0F0F0;
         --text-color: #0D1B2A;
         --accent-color: #53687E;
 
+        margin: 0;
         font-family: Arial, Helvetica, sans-serif;
         color: var(--text-color);
         background-color: var(--background-color);
+        font-size: 1.75rem;
+        /* Change this to scale */
 
         transition: background-color .25s;
+
+        overflow: hidden;
     }
 
     body:has(#darkmode-toggle:checked) {
@@ -22,8 +27,7 @@
     }
 
     .main {
-        margin-left: auto;
-        margin-right: auto;
+        margin: 1em auto;
         width: 60%;
         max-width: 600px;
 
@@ -45,18 +49,21 @@
     .journal,
     .affirmation {
         text-align: center;
+        /* background-color: color-mix(in srgb, var(--background-color), transparent 80%); */
+        border-radius: 1em;
     }
 
     .sobriety {
         cursor: pointer;
     }
 
-    .journal {
+    div.journal {
         text-align: left;
+        margin: 2em auto;
     }
 
     .datetime {
-        font-size: 2em;
+        font-size: 1.25em;
     }
 
     .affirmation {
@@ -111,6 +118,251 @@
         border: none;
         border-top: 1px solid var(--accent-color);
         margin: 1em 0;
+    }
+
+    /* Settings toggle gear button */
+    .settings-toggle-wrapper {
+
+        position: fixed;
+        bottom: 0;
+        z-index: 1005;
+        right: 1em;
+    }
+
+    input:checked~.settings-toggle img {
+        left: 2em;
+    }
+
+    .settings-toggle {
+        display: grid;
+        place-items: center;
+        user-select: none;
+    }
+
+    .settings-toggle img {
+        content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTkuNjYiIGhlaWdodD0iMTk5LjkzIiB2aWV3Qm94PSIwIDAgNTIuODMgNTIuOSI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTI5LjczIDUyLjU3Yy0uMjYtLjItLjkzLTEuNDEtMS40OC0yLjcxLTEuMS0yLjU3LTEuNDItMi45My0yLjQyLTIuNjgtLjUxLjEzLS44OS42Ni0xLjY3IDIuMzYtMS4yIDIuNTktMS42IDMuMTEtMi40IDMuMTEtMS4xIDAtMS4zNS0uNTgtMS41MS0zLjQ4LS4xMy0yLjM4LS4yMy0yLjc4LS43My0zLjItLjMyLS4yNS0uNy0uNDYtLjg0LS40NnMtMS4yNS45NS0yLjQ2IDIuMTJjLTEuMjIgMS4xNi0yLjM4IDIuMTEtMi41OSAyLjExLS41MiAwLTEuMjUtLjg2LTEuMjUtMS40OSAwLS4yOC4zLTEuNTYuNjctMi44NCAxLjEyLTMuODQuNDYtNC4zMS0zLjQ3LTIuNTQtMi4xNS45OC0yLjYgMS4xLTMuMTYuODMtMS4wOC0uNDktLjg1LTEuNDUuOTMtMy45IDEuNzItMi4zNyAxLjkxLTMuMDcgMS0zLjY2LS41LS4zLTEuMDYtLjMzLTMuMi0uMTEtMi45LjI5LTMuMjcuMjItMy42LS42NC0uMzMtLjg5LjA1LTEuMzcgMi4yLTIuODMgMS4wNy0uNzIgMi4xNC0xLjUgMi4zOC0xLjc0IDEuMS0xLjEuMTYtMS45Ny0yLjk3LTIuNzhDLjM4IDI3LjMzLS4yOCAyNi44Mi4xIDI1LjcyYy4yMy0uNjQuNTMtLjc5IDIuOTctMS40MiAxLjUtLjQgMi45LS44NSAzLjEtMS4wMy43Ny0uNjMuNDYtMS41NC0uODQtMi40NC0yLjM1LTEuNjItMy44LTIuODUtMy44LTMuMjEgMC0uMi4yMi0uNjQuNS0uOTcuNDgtLjYuNS0uNiAzLjM1LS4zIDIuNTYuMjkgMi45LjI3IDMuMzQtLjEyLjI3LS4yNC40OC0uNjQuNDgtLjg5IDAtLjI0LS43LTEuNS0xLjU4LTIuOC0uODgtMS4yOS0xLjU5LTIuNTMtMS41OS0yLjc3IDAtLjQ4LjgtMS4zIDEuMjctMS4zLjE3IDAgMS40My41NiAyLjggMS4yNCAyLjIyIDEuMSAyLjU5IDEuMiAzLjE5LjkzLjg0LS4zOC44Ni0uOTYuMTMtMy44Mi0uNjgtMi42OC0uNjEtMy40Mi4zNi0zLjc2LjY4LS4yNC44Ny0uMTIgMi45MSAxLjkxIDEuMiAxLjIgMi4zNyAyLjE3IDIuNiAyLjE3Ljg4IDAgMS4yNi0uODkgMS41NC0zLjdDMjEuMTMuNTkgMjEuNCAwIDIyLjQ0IDBjLjY3IDAgMS4xNy43MSAyLjI0IDMuMjMgMS40OCAzLjQ2IDIuMzggMy41IDMuOTguMTRDMjkuOTUuNjUgMzAuMjYuMjcgMzEuMi4yN2MxIDAgMS4xOS40NiAxLjM4IDMuNTMuMDkgMS40NC4zIDIuNzguNDYgMi45OC42OC44MiAxLjYxLjQgMy43LTEuNjIgMS4xMi0xLjEgMi4xOC0xLjk4IDIuMzUtMS45OC4xNyAwIC41NC4xMi44Mi4yNy43LjM4LjY2IDEuMzktLjIgNC4yMy0uNjggMi4zLS42OCAyLjM4LS4yMSAyLjkuNjYuNzQgMS4wNi42OCAzLjY3LS41MyAyLjQzLTEuMTIgMy4wNC0xLjI1IDMuNTUtLjc0LjY0LjY0LjMgMS42NC0xLjMgMy44NC0xLjI4IDEuNzgtMS41NyAyLjM1LTEuNDQgMi44OC4yMy45LjkgMS4wOSAzLjE0Ljg2IDMuMjUtLjMyIDMuNTctLjI5IDQuMDUuNDQuMzguNi4zOS43Mi4wMyAxLjI3LS4yMi4zNC0xLjM1IDEuMjQtMi41MiAyLTEuMTYuNzctMi4xNyAxLjYtMi4yMyAxLjg1LS4yNS45Mi4yNiAxLjU5IDEuNDQgMS45IDMuOTMgMS4wMiA0LjcgMS4zMyA0Ljg2IDEuOTYuMyAxLjI0LS4yMiAxLjYzLTMuMDUgMi4yOC00LjEuOTItNC40OCAxLjkzLTEuNTQgMy45NSAzLjE1IDIuMTcgMy42MyAyLjg5IDIuNTkgMy44NC0uNDguNDMtLjc0LjQ1LTMuMzQuMTUtMi41NS0uMjgtMi44NS0uMjctMy4zLjE0LS4yOC4yNS0uNS42NS0uNS44OCAwIC4yNC43IDEuNDkgMS41OCAyLjc4Ljg3IDEuMjkgMS41OSAyLjU2IDEuNTkgMi44M3MtLjMxLjY5LS42OS45M2MtLjY3LjQ0LS43NC40Mi0zLjMtLjgzLTIuMy0xLjE0LTIuNjgtMS4yNS0zLjI4LS45OC0uODQuMzgtLjg3IDEuMDktLjEzIDMuNzQuNzEgMi41Ni42MiAzLjUtLjM2IDMuODQtLjcuMjUtLjg2LjE0LTIuODgtMS45MS0zLjEtMy4xNi0zLjctMi45My00LjE0IDEuNTItLjIxIDIuMS0uMzkgMi44NS0uNzQgMy4xMS0uNTguNDMtLjkzLjQyLTEuNTMtLjAxem0uNzUtMTAuMjNjMS4xMi0uMjkgMi43OC0uOTEgMy42OC0xLjM5YTIwLjE2IDIwLjE2IDAgMCAwIDYuMjMtNS44N2MxLjE2LTIuMzcgMi4yNC00LjMzIDIuMDItNi45bC03LjQzLS4wN2MtNi44Mi0uMDctNy40Ni0uMDMtNy44NS40LS43Ny44Ni03LjA4IDEyLjAxLTcuMDggMTIuNTEgMCAxLjU3IDYuMzQgMi4zNyAxMC40MyAxLjMyem0tOS43My05LjEzYzEuOTYtMy40IDMuNTMtNi4zOCAzLjUzLTYuNzUgMC0xLjAzLTYuOTEtMTIuODItNy41Ny0xMi45MS0uNzQtLjExLTMuNjggMy4wNS00LjggNS4xNmExNi45OCAxNi45OCAwIDAgMC0uMDIgMTUuNDZjMS4xMiAyLjEgNC4wOCA1LjMgNC44IDUuMi4zOS0uMDYgMS41LTEuNzYgNC4wNi02LjE2em0yMS4xOC0xMi4xM0ExNyAxNyAwIDAgMCAzMC4xIDEwLjQyYy0zLjUzLS44OS05LjgtLjAyLTEwIDEuMzgtLjA4LjUgNi4wNSAxMS40OCA3LjAzIDEyLjYxLjM4LjQzIDEuMDIuNDYgNy44NC40bDcuNDMtLjA3Yy4xOS0xLjI3LS4xLTIuNi0uNDgtMy42NnoiLz48L3N2Zz4=");
+        display: inline-block;
+        width: 1.5 em;
+        height: 1.5em;
+        text-shadow: 0 0 3em #f7f4f455;
+        text-align: center;
+        transition: transform .25s, rotate .25s, scale .25s;
+    }
+
+    .settings-toggle img:hover {
+        transform: rotate(100deg);
+    }
+
+    /* Config menu */
+
+    aside {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 1001;
+        right: -450px;
+        height: 100vh;
+        min-width: 333px;
+        width: 450px;
+        padding: 0 21px;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-size: 15px;
+        font-weight: 400;
+        text-shadow: none;
+        text-align: initial;
+        overflow-y: auto;
+        overflow-x: hidden;
+        touch-action: pan-y;
+        box-sizing: border-box;
+        transition: transform .33s, background-color .33s;
+    }
+
+    /* Toggle for settings menu */
+    aside:has(#settings-toggle:checked),
+    aside.shown {
+        -webkit-transform: translateX(-100%);
+        transform: translate(-100%);
+        box-shadow: 0 1px 20px 1px #00000026;
+        background-color: color-mix(in srgb, var(--background-color), transparent 20%);
+    }
+
+    aside .help {
+        padding: .1em;
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        border-radius: 50%;
+        background-color: color-mix(in srgb, var(--background-color), transparent 60%);
+        text-align: center;
+        font-weight: 400;
+
+    }
+
+    aside .settings-content {
+        margin-top: 18px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        color: var(--background-color);
+        background-color: color-mix(in srgb, var(--text-color), transparent 20%);
+    }
+
+    aside .settings-title {
+        display: grid;
+        place-items: baseline;
+        grid-template-columns: 1fr min-content;
+        margin: 32px 26px 0;
+        color: var(--color-light-text);
+    }
+
+    aside .settings-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    aside {
+        hr {
+            border: none;
+            border-top: 1px solid color-mix(in srgb, var(--background-color), transparent 20%);
+            margin: 1em 0;
+        }
+
+        /* General styles for form controls */
+        input,
+        textarea,
+        select,
+        button {
+            border: 1px solid #ccc;
+            /* Light gray border */
+            border-radius: 10px;
+            /* Rounded corners */
+            padding: 10px;
+            /* Inner spacing */
+            font-size: 16px;
+            /* Readable font size */
+            outline: none;
+            /* Remove default focus outline */
+            transition: box-shadow 0.3s ease;
+            /* Smooth focus effect */
+        }
+
+        /* Add focus effect */
+        input:focus,
+        textarea:focus,
+        select:focus,
+        button:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            /* Blue glow */
+            border-color: var(--accent-color);
+            /* Blue border */
+        }
+
+        /* Button-specific styles */
+        button {
+            background-color: var(--accent-color);
+            /* Blue background */
+            color: white;
+            /* White text */
+            cursor: pointer;
+            /* Pointer cursor */
+            border: none;
+            /* Remove default border */
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            /* Darker blue on hover */
+        }
+
+        .rounded-checkbox {
+            position: relative;
+            display: inline-block;
+            scale: .6;
+            margin-bottom: 0;
+        }
+
+        .rounded-checkbox:after,
+        .rounded-checkbox:before {
+            font-family: FontAwesome;
+            font-feature-settings: normal;
+            -webkit-font-kerning: auto;
+            font-kerning: auto;
+            font-language-override: normal;
+            font-stretch: normal;
+            font-style: normal;
+            font-synthesis: weight style;
+            font-variant: normal;
+            font-weight: normal;
+            text-rendering: auto;
+        }
+
+        .rounded-checkbox label {
+            width: 90px;
+            height: 42px;
+            background: var(--background-color);
+            position: relative;
+            display: inline-block;
+            border-radius: 46px;
+            transition: 0.4s;
+        }
+
+        .rounded-checkbox label:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            left: 0;
+            top: -5px;
+            z-index: 2;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: 0.4s;
+        }
+
+        .rounded-checkbox input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .rounded-checkbox input:hover+label:after {
+            box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .rounded-checkbox input:checked+label:after {
+            left: 40px;
+        }
+
+        .rounded-checkbox label {
+            width: 75px;
+        }
+
+        .rounded-checkbox label:after {
+            top: 0;
+            width: 42px;
+            height: 42px;
+        }
+
+        .rounded-checkbox input:checked+label {
+            background: var(--accent-color);
+        }
+
+        .rounded-checkbox input:checked+label:after {
+            left: 35px;
+        }
+    }
+
+    .sr-only {
+        position: absolute;
+        left: -9999px;
+        opacity: 0;
     }
 
     @media print {

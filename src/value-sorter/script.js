@@ -17,7 +17,7 @@ createApp({
         // If not set, default to system preference
         let lsPrefersDark = window.localStorage.getItem("prefers-dark");
         if (lsPrefersDark !== null) {
-            this.prefersDark = lsPrefersDark == "true";
+            this.prefersDark = lsPrefersDark == "true" || lsPrefersDark === true;
         } else {
             this.prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         }
